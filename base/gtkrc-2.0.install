@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+#
+# gtk2 does not support XDG_CONFIG_HOME, so keep the real file under
+# ~/.config and symlink it into place at ~/.gtkrc-2.0.
+
+ln -sf "$HOME/.config/gtkrc-2.0" "$HOME/.gtkrc-2.0"

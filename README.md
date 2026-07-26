@@ -15,17 +15,24 @@ directly has no effect on the source.
 
 ## Layout
 
-Paths inside a group mirror their destination under `install_path` exactly,
-including the `.config/` prefix and leading dots:
+`install_path` is `${HOME}/.config`, so paths inside a group map straight
+into it:
 
 ```
-base/.gtkrc-2.0                  -> ~/.gtkrc-2.0
-base/.config/fish/config.fish    -> ~/.config/fish/config.fish
-base/.config/alacritty/...       -> ~/.config/alacritty/...
+base/fish/config.fish   -> ~/.config/fish/config.fish
+base/alacritty/...      -> ~/.config/alacritty/...
 ```
 
 Currently tracked: fish, alacritty, btop, micro, mango, fwm, matugen,
 libinput-gestures, arkrc, and gtkrc-2.0.
+
+### Non-XDG apps
+
+GTK2 doesn't support `XDG_CONFIG_HOME`, so `base/gtkrc-2.0` installs to
+`~/.config/gtkrc-2.0` as usual, and `base/gtkrc-2.0.install` symlinks
+`~/.gtkrc-2.0` to it. Install scripts (`<file>.install`) run automatically
+whenever the file they're paired with changes; see `dots`' README for the
+full mechanism.
 
 ## Usage
 

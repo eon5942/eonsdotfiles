@@ -46,51 +46,12 @@ dots files                         # list all managed files
 tries to symlink a `-staged` sibling next to `$HOME`, which isn't writable) —
 use `dots install --dry-run --verbose` instead.
 
-## Syncing changes (`dots-sync`)
+## Syncing changes
 
-`dots-sync` (`~/.local/bin/dots-sync`) wraps the edit -> install -> commit ->
-push loop into one command. It's not part of `dots` itself, just a personal
-script for this repo.
-
-```sh
-dots-sync                  # install, then commit with an auto-generated message and push
-dots-sync "add mako config"  # install, then commit with this message and push
-```
-
-It runs `dots install` first, so a broken config fails before anything is
-pushed, then commits and pushes from `~/.local/etc` (override with
-`DOTS_SOURCE_PATH` if the source tree ever moves). If there's nothing to
-commit it exits quietly without touching git.
-
-### Where it pushes to
-
-`dots-sync` just runs `git push`, so it pushes wherever this repo's `origin`
-remote points — no separate configuration of its own. Check or change that
-with:
-
-```sh
-git remote -v                                              # see current remote
-git remote set-url origin git@github.com:<user>/<repo>.git # point at a different repo/account
-```
-
-To publish this repo to a GitHub account for the first time (e.g. after
-copying the dotfiles elsewhere without git history):
-
-```sh
-gh repo create <repo-name> --source=. --private --remote=origin  # creates the repo on GitHub and adds the remote
-git push -u origin main                                          # first push; dots-sync (or plain `git push`) works after this
-```
-
-Without the `gh` CLI, create the empty repo on github.com first, then:
-
-```sh
-git remote add origin git@github.com:<user>/<repo-name>.git
-git push -u origin main
-```
-
-SSH pushes require a key added to your GitHub account under
-Settings -> SSH and GPG keys; use an `https://` remote URL instead if you'd
-rather authenticate with a token.
+[`dots-sync`](https://github.com/eon5942/dots-sync) wraps the edit -> install
+-> commit -> push loop for this repo into one command
+(`dots-sync "commit message"`). See that repo's README for install and usage
+details.
 
 ## Setup on a new machine
 

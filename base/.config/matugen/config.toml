@@ -1,0 +1,11 @@
+[config]
+
+[templates.waybar]
+input_path = "/home/eon/.config/matugen/templates/waybar-colors.template"
+output_path = "/home/eon/.config/waybar/colors.css"
+post_hook = "pkill waybar; setsid waybar > /tmp/waybar.log 2>&1 & disown"
+
+[templates.mango]
+input_path = "/home/eon/.config/matugen/templates/mango-colors.template"
+output_path = "/home/eon/.config/mango/colors.conf"
+post_hook = "mmsg dispatch reload_config"

@@ -1,0 +1,18 @@
+# Compilation installation path.
+# Supports environment variable expansions using ${VARIABLE}
+install_path: ${HOME}
+
+# The file suffix used for override files
+override_suffix: override
+
+# The file suffix to use for installation files
+install_suffix: install
+
+groups:
+  - base
+
+# Groups to compile for all profiles
+base_groups: [base]
+
+# Keep the lockfile out of the version-controlled source tree
+lockfile_path: ${HOME}/.local/state/dots/dotlock.json

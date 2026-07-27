@@ -1,0 +1,25 @@
+font=Iosevka Nerd Font Mono 11
+sort=-time
+layer=overlay
+anchor=top-right
+margin=10
+padding=10,14
+width=320
+height=110
+border-size=2
+border-radius=0
+max-icon-size=32
+default-timeout=6000
+icons=1
+
+on-button-left=dismiss
+on-button-right=dismiss-all
+
+# colors come from matugen, regenerated per-wallpaper - see colors
+include=~/.config/mako/colors
+
+[urgency=low]
+default-timeout=3000
+
+[urgency=critical]
+default-timeout=0

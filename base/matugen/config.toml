@@ -17,3 +17,8 @@ output_path = "/home/eon/.config/kitty/colors.conf"
 [templates.gtk4]
 input_path = "/home/eon/.config/matugen/templates/gtk-colors.template"
 output_path = "/home/eon/.config/gtk-4.0/gtk.css"
+
+[templates.mako]
+input_path = "/home/eon/.config/matugen/templates/mako-colors.template"
+output_path = "/home/eon/.config/mako/colors"
+post_hook = "makoctl reload"

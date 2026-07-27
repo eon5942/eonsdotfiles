@@ -23,8 +23,12 @@ base/fish/config.fish   -> ~/.config/fish/config.fish
 base/alacritty/...      -> ~/.config/alacritty/...
 ```
 
-Currently tracked: fish, alacritty, btop, micro, mango, fwm, matugen,
-libinput-gestures, arkrc, and gtkrc-2.0.
+Currently tracked: fish, btop, micro, mango, matugen, libinput-gestures,
+arkrc, gtkrc-2.0, waybar, and kitty.
+
+GTK3/4 (`~/.config/gtk-{3,4}.0/settings.ini`) and `kdeglobals` are edited
+directly and intentionally left untracked — Plasma rewrites them itself
+(e.g. from System Settings), so tracking them here would just fight it.
 
 ### Non-XDG apps
 

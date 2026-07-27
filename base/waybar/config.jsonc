@@ -1,0 +1,194 @@
+// -*- mode: jsonc -*-
+{
+    "layer": "top",
+    "position": "top",
+    "height": 49,
+    "margin-top": 6,
+    "margin-left": 10,
+    "margin-right": 10,
+    "spacing": 0,
+
+    "modules-left": [
+        "custom/launcher",
+        "custom/tag1",
+        "custom/tag2",
+        "custom/tag3",
+        "custom/tag4",
+        "custom/tag5",
+        "custom/tag6",
+        "custom/tag7",
+        "custom/tag8",
+        "custom/tag9",
+        "clock"
+    ],
+    "modules-center": [
+        "image#spotify-art",
+        "custom/spotify-prev",
+        "custom/spotify-playpause",
+        "custom/spotify-next",
+        "custom/spotify-title",
+        "custom/cava"
+    ],
+    "modules-right": [
+        "tray",
+        "pulseaudio",
+        "network",
+        "cpu",
+        "memory",
+        "temperature",
+        "battery"
+    ],
+
+    "custom/launcher": {
+        "format": "⛏ APPS",
+        "on-click": "fuzzel",
+        "tooltip-format": "App Launcher"
+    },
+    "custom/tag1": {
+        "exec": "~/.config/waybar/scripts/mango-tags.sh status 1",
+        "on-click": "~/.config/waybar/scripts/mango-tags.sh switch 1",
+        "return-type": "json",
+        "interval": "once",
+        "signal": 8
+    },
+    "custom/tag2": {
+        "exec": "~/.config/waybar/scripts/mango-tags.sh status 2",
+        "on-click": "~/.config/waybar/scripts/mango-tags.sh switch 2",
+        "return-type": "json",
+        "interval": "once",
+        "signal": 8
+    },
+    "custom/tag3": {
+        "exec": "~/.config/waybar/scripts/mango-tags.sh status 3",
+        "on-click": "~/.config/waybar/scripts/mango-tags.sh switch 3",
+        "return-type": "json",
+        "interval": "once",
+        "signal": 8
+    },
+    "custom/tag4": {
+        "exec": "~/.config/waybar/scripts/mango-tags.sh status 4",
+        "on-click": "~/.config/waybar/scripts/mango-tags.sh switch 4",
+        "return-type": "json",
+        "interval": "once",
+        "signal": 8
+    },
+    "custom/tag5": {
+        "exec": "~/.config/waybar/scripts/mango-tags.sh status 5",
+        "on-click": "~/.config/waybar/scripts/mango-tags.sh switch 5",
+        "return-type": "json",
+        "interval": "once",
+        "signal": 8
+    },
+    "custom/tag6": {
+        "exec": "~/.config/waybar/scripts/mango-tags.sh status 6",
+        "on-click": "~/.config/waybar/scripts/mango-tags.sh switch 6",
+        "return-type": "json",
+        "interval": "once",
+        "signal": 8
+    },
+    "custom/tag7": {
+        "exec": "~/.config/waybar/scripts/mango-tags.sh status 7",
+        "on-click": "~/.config/waybar/scripts/mango-tags.sh switch 7",
+        "return-type": "json",
+        "interval": "once",
+        "signal": 8
+    },
+    "custom/tag8": {
+        "exec": "~/.config/waybar/scripts/mango-tags.sh status 8",
+        "on-click": "~/.config/waybar/scripts/mango-tags.sh switch 8",
+        "return-type": "json",
+        "interval": "once",
+        "signal": 8
+    },
+    "custom/tag9": {
+        "exec": "~/.config/waybar/scripts/mango-tags.sh status 9",
+        "on-click": "~/.config/waybar/scripts/mango-tags.sh switch 9",
+        "return-type": "json",
+        "interval": "once",
+        "signal": 8
+    },
+    "clock": {
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format": " {:%a %d %b   %H:%M}"
+    },
+    "cpu": {
+        "format": "CPU  {usage}%",
+        "tooltip": false,
+        "interval": 2
+    },
+    "memory": {
+        "format": "MEM  {}%",
+        "interval": 5
+    },
+    "temperature": {
+        "critical-threshold": 80,
+        "format": "TEMP {icon} {temperatureC}°C",
+        "format-icons": ["", "", ""]
+    },
+    "battery": {
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "BAT {icon} {capacity}%",
+        "format-charging": "BAT  {capacity}%",
+        "format-plugged": "BAT  {capacity}%",
+        "format-icons": ["", "", "", "", ""]
+    },
+    "pulseaudio": {
+        "format": "VOL {icon} {volume}%",
+        "format-muted": "VOL 婢 muted",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol"
+    },
+    "tray": {
+        "spacing": 12
+    },
+    "image#spotify-art": {
+        "exec": "~/.config/waybar/scripts/spotify-mpris.sh status art",
+        "size": 28,
+        "interval": "once",
+        "signal": 9
+    },
+    "custom/spotify-prev": {
+        "exec": "~/.config/waybar/scripts/spotify-mpris.sh status prev",
+        "return-type": "json",
+        "interval": "once",
+        "signal": 9,
+        "on-click": "~/.config/waybar/scripts/spotify-mpris.sh click previous"
+    },
+    "custom/spotify-playpause": {
+        "exec": "~/.config/waybar/scripts/spotify-mpris.sh status playpause",
+        "return-type": "json",
+        "interval": "once",
+        "signal": 9,
+        "on-click": "~/.config/waybar/scripts/spotify-mpris.sh click play-pause"
+    },
+    "custom/spotify-next": {
+        "exec": "~/.config/waybar/scripts/spotify-mpris.sh status next",
+        "return-type": "json",
+        "interval": "once",
+        "signal": 9,
+        "on-click": "~/.config/waybar/scripts/spotify-mpris.sh click next"
+    },
+    "custom/spotify-title": {
+        "exec": "~/.config/waybar/scripts/spotify-mpris.sh status title",
+        "return-type": "json",
+        "interval": "once",
+        "signal": 9,
+        "max-length": 32
+    },
+    "custom/cava": {
+        "exec": "~/.config/waybar/scripts/cava-bars.sh",
+        "format": "{}",
+        "tooltip": false
+    }
+}

@@ -24,7 +24,7 @@ base/alacritty/...      -> ~/.config/alacritty/...
 ```
 
 Currently tracked: fish, btop, micro, mango, matugen, libinput-gestures,
-arkrc, gtkrc-2.0, waybar, and kitty.
+arkrc, gtkrc-2.0, waybar, kitty, mako, and fastfetch.
 
 GTK3/4 (`~/.config/gtk-{3,4}.0/settings.ini`) and `kdeglobals` are edited
 directly and intentionally left untracked — Plasma rewrites them itself

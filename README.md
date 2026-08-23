@@ -63,6 +63,7 @@ details.
 git clone git@github.com:eon5942/eonsdotfiles.git ~/.local/etc
 dots install
 ```
+you will have to install on a fresh setup, mango rofi waybar wayland cava lavat fastfetch kitty sddm opencode librewolf btop matugen mako
 
 Requires the `dots` binary built from
 [evanpurkhiser/dots](https://github.com/evanpurkhiser/dots) (`main` branch)

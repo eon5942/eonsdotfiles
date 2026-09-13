@@ -249,9 +249,9 @@ wofi + mako + yambar stack in a strict black/white monochrome look.
 | `dwl/mako/config`      | `~/.config/mako/config`      | Notification daemon config           |
 | `dwl/yambar/config.yml`| `~/.config/yambar/config.yml`| Status bar config                    |
 
-The NixOS build uses identical copies in `nixos/` (`dwl-config.h`,
-`dwl-gaps.patch`) so it can compile the same dwl without relying on the
-installed `~/.config` copy — see [NixOS](#nixos) below.
+The NixOS build uses identical copies of `dwl-config.h` and `dwl-gaps.patch`
+(living in the `nixos-config` repo) so it can compile the same dwl without
+relying on the installed `~/.config` copy — see [NixOS](#nixos) below.
 
 ### Building / the gaps patch
 
@@ -350,24 +350,17 @@ exists):
 
 ## NixOS
 
-The whole machine is reproducible from a flake at the repo root — one
-`git clone` + one `nixos-rebuild --flake` rebuilds it from a pinned nixpkgs
-commit. The config:
+The NixOS system configuration (flake, `configuration.nix`,
+`hardware-configuration.nix`, the `dwl`/`mango` build sources) lives in its
+own repo: **[`eon5942/nixos-config`](https://github.com/eon5942/nixos-config)**.
 
-- Builds `dwl` with `configH = ./dwl-config.h` and `patches = [ ./dwl-gaps.patch ]`.
-- Wraps it as a script that sets `PATH` (for `run/wrappers/bin`) and runs
-  `dwl -s "$HOME/.config/dwl/autostart"`.
-- `services.greetd` + `tuigreet` provide a minimal TUI login that drops
-  straight into dwl.
-- Installs the companion apps (`foot`, `wofi`, `yambar`, `librewolf`, `grim`,
-  `slurp`, `wl-clipboard`, `swaybg`, `xdg-desktop-portal-wlr`, `mako`) plus
-  the Iosevka Nerd Font.
+It builds `dwl` (with `dwl-config.h` + the gaps patch) and `mango`, launches
+them via `greetd`/`tuigreet`, and installs the companion apps (`foot`, `wofi`,
+`yambar`, `rofi`, `waybar`, `kitty`, `cava`, `mako`, `matugen`, …) plus the
+Iosevka Nerd Font. Full reproducibility docs are in that repo's README.
 
-The mango setup is the everyday rice; dwl (and the NixOS config) is the
-minimal, reproducible alternative.
-
-Full flake/reproducibility details, file layout, and setup/update commands are
-in [`nixos/README.md`](nixos/README.md).
+The mango setup is the everyday rice; dwl is the minimal, reproducible
+alternative.
 
 ---
 

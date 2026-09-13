@@ -63,9 +63,8 @@ echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.con
 
 # (new hardware only) regenerate the machine-specific config, then commit it
 # sudo nixos-generate-config --dir ~/.local/etc/nixos
-# doas nixos-rebuild switch --flake ~/.local/etc#nixos
 
-sudo nixos-rebuild switch --flake ~/.local/etc#nixos
+sudo nixos-rebuild switch --flake 'path:/home/eon/.local/etc#nixos'
 ```
 
 After that first rebuild, flakes are enabled *by the config itself*
@@ -80,23 +79,33 @@ manual `nix.conf` editing.
 cd ~/.local/etc
 
 # rebuild after editing configuration.nix
-doas nixos-rebuild switch --flake .#nixos
+doas nixos-rebuild switch --flake 'path:/home/eon/.local/etc#nixos'
 
 # check what a rebuild would do without applying it
-doas nixos-rebuild dry-build --flake .#nixos
+doas nixos-rebuild dry-build --flake 'path:/home/eon/.local/etc#nixos'
 
 # update nixpkgs to the latest nixos-26.05 commit (re-pins flake.lock)
-nix flake update && doas nixos-rebuild switch --flake .#nixos
+nix flake update && doas nixos-rebuild switch --flake 'path:/home/eon/.local/etc#nixos'
 
 # garbage-collect old system generations
 doas nix-collect-garbage -d
 ```
 
-`nixos-rebuild --flake ~/.local/etc` (no `#attr`) also works — it defaults to
-the hostname `nixos`.
+The `path:` prefix is deliberate — see the ownership gotcha below. `nixos-rebuild`
+defaults the `#attr` to the hostname (`nixos`), so `path:/home/eon/.local/etc`
+(no `#nixos`) also works.
 
 ## Gotchas
 
+- **Rebuilding as root hits a git ownership check.** A bare `--flake
+  ~/.local/etc` is resolved as `git+file://`, and git/libgit2 refuses to open a
+  repository not owned by the current user — so `doas nixos-rebuild --flake
+  .` fails with *"repository path … is not owned by current user"*. Two ways
+  around it:
+  - Use the `path:` ref (shown above) — it copies the directory straight from
+    the filesystem and never touches git, so there is no ownership check.
+  - Or trust the directory once: `doas git config --global --add safe.directory
+    /home/eon/.local/etc` and then `--flake ~/.local/etc#nixos` works as usual.
 - **Flakes only see git-tracked files.** If you add/rename a file and the build
   says it can't find it, `git add` it first. `git status` should be clean before
   rebuilding.

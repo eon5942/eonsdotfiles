@@ -1,0 +1,11 @@
+show=drun
+width=600
+height=400
+location=0
+prompt=Applications
+normal_window=false
+allow_images=false
+allow_markup=false
+insensitive=true
+no_actions=false
+filter_rate=100

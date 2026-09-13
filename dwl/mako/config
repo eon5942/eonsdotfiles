@@ -11,15 +11,16 @@ border-radius=0
 max-icon-size=32
 default-timeout=6000
 icons=1
-
 on-button-left=dismiss
 on-button-right=dismiss-all
 
-# colors come from matugen, regenerated per-wallpaper - see colors
-include=~/.config/mako/colors
+background-color=#000000
+text-color=#ffffff
+border-color=#ffffff
 
 [urgency=low]
 default-timeout=3000
+border-color=#666666
 
 [urgency=critical]
 default-timeout=0

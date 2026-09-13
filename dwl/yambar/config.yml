@@ -1,0 +1,68 @@
+bar:
+  height: 26
+  location: top
+  background: 000000ff
+  foreground: ffffffff
+
+  left:
+    - dwl:
+        number-of-tags: 9
+        dwl-info-filename: /home/eon/.cache/dwltags
+        content:
+          map:
+            conditions:
+              id == 0:
+                string:
+                  text: " {layout} "
+                  foreground: 888888ff
+              selected:
+                string:
+                  text: " {name} "
+                  foreground: 000000ff
+                  deco:
+                    background:
+                      color: ffffffff
+              urgent:
+                string:
+                  text: " {name} "
+                  foreground: ffffffff
+              empty:
+                string:
+                  text: " {name} "
+                  foreground: 555555ff
+              ~empty:
+                string:
+                  text: " {name} "
+                  foreground: ffffffff
+
+  right:
+    - cpu:
+        poll-interval: 2500
+        content:
+          map:
+            conditions:
+              id < 0:
+                string:
+                  text: " cpu {cpu}% "
+                  foreground: 888888ff
+    - mem:
+        poll-interval: 5000
+        content:
+          string:
+            text: " mem {percent_used}% "
+            foreground: 888888ff
+    - battery:
+        name: BAT1
+        poll-interval: 60000
+        content:
+          string:
+            text: " bat {capacity}% "
+            foreground: 888888ff
+    - clock:
+        content:
+          - string:
+              text: " {date} "
+              foreground: 888888ff
+          - string:
+              text: " {time} "
+              foreground: ffffffff

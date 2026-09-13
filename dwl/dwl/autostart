@@ -1,0 +1,24 @@
+#!/bin/sh
+# dwl autostart - run by dwl via `dwl -s <this-script>`, so it executes AFTER
+# the Wayland socket exists (WAYLAND_DISPLAY is set) and the backend is up.
+#
+# dwl connects its stdout to our stdin. `exec cat` keeps the bridge in the
+# foreground (a backgrounded `cat &` would get stdin from /dev/null) and
+# streams dwl's status into the file yambar's "dwl" module reads.
+
+export XDG_CURRENT_DESKTOP=dwl
+export XDG_SESSION_DESKTOP=dwl
+
+# Wallpaper (drop any image at ~/.config/dwl/wallpaper to use it).
+if [ -f "$HOME/.config/dwl/wallpaper" ]; then
+    swaybg -i "$HOME/.config/dwl/wallpaper" -m fill &
+fi
+
+# Status bar.
+yambar &
+
+# Notifications.
+mako &
+
+# Bridge dwl's status stream (our stdin) to the file yambar reads.
+exec cat > "$HOME/.cache/dwltags"

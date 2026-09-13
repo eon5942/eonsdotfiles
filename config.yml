@@ -10,9 +10,10 @@ install_suffix: install
 
 groups:
   - base
+  - dwl
 
 # Groups to compile for all profiles
-base_groups: [base]
+base_groups: [base, dwl]
 
 # Keep the lockfile out of the version-controlled source tree
 lockfile_path: ${HOME}/.local/state/dots/dotlock.json

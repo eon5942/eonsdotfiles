@@ -350,7 +350,9 @@ exists):
 
 ## NixOS
 
-`nixos/configuration.nix` contains a reproducible build of the **dwl** setup:
+The whole machine is reproducible from a flake at the repo root — one
+`git clone` + one `nixos-rebuild --flake` rebuilds it from a pinned nixpkgs
+commit. The config:
 
 - Builds `dwl` with `configH = ./dwl-config.h` and `patches = [ ./dwl-gaps.patch ]`.
 - Wraps it as a script that sets `PATH` (for `run/wrappers/bin`) and runs
@@ -363,6 +365,9 @@ exists):
 
 The mango setup is the everyday rice; dwl (and the NixOS config) is the
 minimal, reproducible alternative.
+
+Full flake/reproducibility details, file layout, and setup/update commands are
+in [`nixos/README.md`](nixos/README.md).
 
 ---
 

@@ -164,6 +164,9 @@ services.xserver = {
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  # Enable flakes + the new CLI, so this config itself builds via `nixos-rebuild --flake`.
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   # Replace sudo with doas (wheel group gets full access).
   security.sudo.enable = false;
   security.doas = {

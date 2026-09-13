@@ -41,9 +41,15 @@ in
 {
 
 environment.systemPackages = with pkgs; [
+ayugram-desktop
+steam
+vesktop
+spotify
+rpcs3
 neovim
 wget
 curl
+git
 opencode
 nodejs_22
 fastfetch
@@ -63,6 +69,11 @@ mako
 
 # Iosevka Nerd Font (matches the kitty font from your dotfiles)
 fonts.packages = [ pkgs.nerd-fonts.iosevka ];
+#1password
+ programs._1password.enable = true;
+  programs._1password-gui = {
+    enable = true;
+    };
 
 # dwl (minimal Wayland compositor). `-s` runs the autostart script after the
 # Wayland socket exists; the script bridges dwl's status output to
@@ -82,6 +93,13 @@ services.greetd = {
       command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd ${dwlPackage}/bin/dwl";
     };
   };
+};
+
+# Window Maker (X11). Launch with `startx` from a TTY (Ctrl+Alt+F2, login, startx).
+services.xserver = {
+  enable = true;
+  windowManager.windowmaker.enable = true;
+  displayManager.startx.enable = true;
 };
 
   imports =

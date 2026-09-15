@@ -33,6 +33,7 @@ static const Rule rules[] = {
 /* layout(s) */
 static const Layout layouts[] = {
 	/* symbol     arrange function */
+	{ "[F]",      fair },    /* fair: recursive 50/50 binary split (Hyprland fair) */
 	{ "[]=",      tile },
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
@@ -41,10 +42,11 @@ static const Layout layouts[] = {
 /* monitors */
 static const MonitorRule monrules[] = {
 	/* name        mfact  nmaster scale layout       rotate/reflect                x     y
-	 * HDMI-A-1 (LG) is the primary monitor at the origin; eDP-1 (laptop panel)
-	 * sits to its right. Matches the mango monitorrule layout. */
+	 * HDMI-A-1 (AOC Q27G42ZE, 2560x1440 preferred) is the primary at the origin;
+	 * eDP-1 (laptop panel, 1920x1080) sits edge-to-edge to its right at x=2560,
+	 * so the outputs never overlap. */
 	{ "HDMI-A-1",  0.55f, 1,      1,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL,   0,    0 },
-	{ "eDP-1",     0.55f, 1,      1,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL,   1920, 0 },
+	{ "eDP-1",     0.55f, 1,      1,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL,   2560, 0 },
 	/* default: autoconfigure anything else */
 	{ NULL,        0.55f, 1,      1,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL,   -1,  -1 },
 };
@@ -83,6 +85,7 @@ static const enum libinput_config_tap_button_map button_map = LIBINPUT_CONFIG_TA
 static const char *termcmd[] = { "foot", NULL };
 static const char *menucmd[] = { "wofi", "--show", "drun", NULL };
 static const char *browsercmd[] = { "librewolf", NULL };
+static const char *displaycmd[] = { "wdisplays", NULL };
 
 static const Key keys[] = {
 	/* spawn terminal / launcher / browser */
@@ -100,6 +103,20 @@ static const Key keys[] = {
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_Escape,      spawn,            SHCMD("powermenu") },
 	{ MODKEY,                    XKB_KEY_m,           quit,             {0} },
 
+	/* audio */
+	{ 0, XKB_KEY_XF86AudioRaiseVolume, spawn, SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+") },
+	{ 0, XKB_KEY_XF86AudioLowerVolume, spawn, SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-") },
+	{ 0, XKB_KEY_XF86AudioMute,        spawn, SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle") },
+	{ 0, XKB_KEY_XF86AudioMicMute,     spawn, SHCMD("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle") },
+
+	/* brightness */
+	{ 0, XKB_KEY_XF86MonBrightnessUp,   spawn, SHCMD("brightnessctl set +5%") },
+	{ 0, XKB_KEY_XF86MonBrightnessDown, spawn, SHCMD("brightnessctl set 5%-") },
+
+	/* displays */
+	{ MODKEY,                    XKB_KEY_p,           spawn,            {.v = displaycmd} },
+	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_p,           spawn,            SHCMD("chres") },
+
 	/* window management */
 	{ WLR_MODIFIER_ALT,          XKB_KEY_q,           killclient,       {0} },
 	{ WLR_MODIFIER_ALT,          XKB_KEY_backslash,   togglefloating,   {0} },
@@ -116,9 +133,10 @@ static const Key keys[] = {
 	{ MODKEY,                    XKB_KEY_d,           incnmaster,       {.i = -1} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_Return,      zoom,             {0} },
 	{ MODKEY,                    XKB_KEY_n,           setlayout,        {0} },
-	{ MODKEY,                    XKB_KEY_t,           setlayout,        {.v = &layouts[0]} },
-	{ MODKEY,                    XKB_KEY_f,           setlayout,        {.v = &layouts[1]} },
-	{ MODKEY,                    XKB_KEY_v,           setlayout,        {.v = &layouts[2]} },
+	{ MODKEY,                    XKB_KEY_y,           setlayout,        {.v = &layouts[0]} },
+	{ MODKEY,                    XKB_KEY_t,           setlayout,        {.v = &layouts[1]} },
+	{ MODKEY,                    XKB_KEY_f,           setlayout,        {.v = &layouts[2]} },
+	{ MODKEY,                    XKB_KEY_v,           setlayout,        {.v = &layouts[3]} },
 	{ MODKEY,                    XKB_KEY_g,           togglegaps,       {0} },
 
 	/* tags: Ctrl+N = view tag, Alt+N = move client to tag */

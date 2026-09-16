@@ -10,10 +10,19 @@ install_suffix: install
 
 groups:
   - base
+  - mango
   - dwl
+  - mono
 
 # Groups to compile for all profiles
 base_groups: [base, dwl]
+
+# Rice profiles: pick one on a fresh install with `dots config use <name>`.
+#   mango -> base + dwl + mango  (old mango rice, matugen/ore waybar)
+#   mono  -> base + dwl + mono   (new mango rice, dwl monochrome look)
+profiles:
+  mango: [mango]
+  mono: [mono]
 
 # Keep the lockfile out of the version-controlled source tree
 lockfile_path: ${HOME}/.local/state/dots/dotlock.json

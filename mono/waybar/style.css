@@ -1,0 +1,154 @@
+/* "mono" rice waybar style: full old-rice module set in strict black/white,
+ * flat and square (no bevels, no radius). Matches the dwl monochrome look. */
+
+* {
+    font-family: "Iosevka Nerd Font Mono", sans-serif;
+    font-size: 13px;
+    min-height: 0;
+    border-radius: 0;
+}
+
+window#waybar {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+tooltip {
+    background-color: #000000;
+    color: #ffffff;
+    border: 1px solid #ffffff;
+}
+tooltip label {
+    color: #ffffff;
+}
+
+/* ---- left ---- */
+
+#custom-launcher {
+    color: #ffffff;
+    padding: 0 10px;
+}
+#custom-launcher:hover {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+#custom-tag1,
+#custom-tag2,
+#custom-tag3,
+#custom-tag4,
+#custom-tag5,
+#custom-tag6,
+#custom-tag7,
+#custom-tag8,
+#custom-tag9 {
+    color: #555555;
+    padding: 0 8px;
+}
+
+#custom-tag1.occupied,
+#custom-tag2.occupied,
+#custom-tag3.occupied,
+#custom-tag4.occupied,
+#custom-tag5.occupied,
+#custom-tag6.occupied,
+#custom-tag7.occupied,
+#custom-tag8.occupied,
+#custom-tag9.occupied {
+    color: #ffffff;
+}
+
+#custom-tag1.active,
+#custom-tag2.active,
+#custom-tag3.active,
+#custom-tag4.active,
+#custom-tag5.active,
+#custom-tag6.active,
+#custom-tag7.active,
+#custom-tag8.active,
+#custom-tag9.active {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+#custom-tag1.urgent,
+#custom-tag2.urgent,
+#custom-tag3.urgent,
+#custom-tag4.urgent,
+#custom-tag5.urgent,
+#custom-tag6.urgent,
+#custom-tag7.urgent,
+#custom-tag8.urgent,
+#custom-tag9.urgent {
+    color: #ffffff;
+    background-color: #555555;
+}
+
+#clock {
+    color: #ffffff;
+    padding: 0 10px;
+}
+
+/* ---- center: spotify + cava ---- */
+
+#spotify-art {
+    margin: 0 4px 0 0;
+    padding: 0;
+}
+
+#custom-spotify-prev,
+#custom-spotify-playpause,
+#custom-spotify-next {
+    color: #ffffff;
+    min-width: 16px;
+    padding: 0 8px;
+}
+
+#custom-spotify-playpause.paused {
+    color: #555555;
+}
+
+#custom-spotify-title {
+    color: #888888;
+    padding: 0 8px;
+}
+
+#custom-cava {
+    color: #ffffff;
+    padding: 0 8px;
+    letter-spacing: -1px;
+}
+
+/* ---- right ---- */
+
+#pulseaudio,
+#network,
+#cpu,
+#memory,
+#temperature,
+#battery {
+    color: #888888;
+    padding: 0 10px;
+}
+
+#pulseaudio.muted,
+#network.disconnected,
+#temperature.critical {
+    color: #ffffff;
+    background-color: #555555;
+}
+
+#battery {
+    color: #888888;
+}
+#battery.warning:not(.charging) {
+    color: #ffffff;
+}
+#battery.critical:not(.charging) {
+    color: #000000;
+    background-color: #ffffff;
+}
+
+#tray {
+    padding: 0 8px;
+}

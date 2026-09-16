@@ -7,30 +7,60 @@ Personal configuration files, managed with [`dots`](https://github.com/evanpurkh
 made here and then deployed with `dots install` — editing the installed copy
 directly has no effect on the source.
 
-This repo tracks **two complete Wayland compositor setups**:
+This repo tracks **three complete compositor setups**:
 
-| Setup  | Compositor                                                       | Group  | Status bar | Launcher | Terminal | Theme                          |
-| ------ | ---------------------------------------------------------------- | ------ | ---------- | -------- | -------- | ------------------------------ |
-| Mango  | [mango](https://github.com/DreamMaoMao/mango) (wlroots)          | `base` | waybar     | fuzzel   | kitty    | Minecraft-ore palette (matugen) |
-| dwl    | [dwl](https://github.com/djpohly/dwl) (wlroots)                  | `dwl`  | yambar     | wofi     | foot     | Monochrome (black/white)       |
+| Setup       | Compositor                                              | Group   | Status bar | Launcher | Terminal | Theme                          |
+| ----------- | ------------------------------------------------------- | ------- | ---------- | -------- | -------- | ------------------------------ |
+| Mango       | [mango](https://github.com/DreamMaoMao/mango) (wlroots) | `mango` | waybar     | fuzzel   | kitty    | Minecraft-ore palette (matugen) |
+| Mango (mono)| [mango](https://github.com/DreamMaoMao/mango) (wlroots) | `mono`  | waybar     | wofi     | foot     | Monochrome (black/white)        |
+| dwl         | [dwl](https://github.com/djpohly/dwl) (wlroots)         | `dwl`   | yambar     | wofi     | foot     | Monochrome (black/white)        |
 
-Both share the same font (Iosevka Nerd Font Mono), the same 9-tag
+All three share the same font (Iosevka Nerd Font Mono), the same 9-tag
 Ctrl/Alt key scheme, and the same dual-monitor layout (`HDMI-A-1` primary at
-the origin, `eDP-1` to the right). They differ in philosophy: **mango** is a
-full-featured animated compositor with a themed bar and per-wallpaper color
-generation, while **dwl** is a stripped-down, compile-time-configured
-compositor in the spirit of dwm.
+the origin, `eDP-1` to the right). They differ in philosophy: **mango**
+(`mango` group) is a full-featured animated compositor with a themed bar and
+per-wallpaper color generation; **mango (mono)** (`mono` group) is the *same*
+compositor with the dwl monochrome aesthetic and dwl keymap ported onto it;
+**dwl** is the stripped-down, compile-time-configured compositor in the spirit
+of dwm.
 
 ---
 
 ## Groups
 
-| Group  | Description                                                            |
-| ------ | ---------------------------------------------------------------------- |
-| `base` | The mango rice — installed everywhere, always.                         |
-| `dwl`  | The minimal dwl rice (compositor + foot/wofi/mako/yambar).             |
+| Group   | Description                                                                   |
+| ------- | ----------------------------------------------------------------------------- |
+| `base`  | Shared shell/app config — installed everywhere, always (a `base_groups` entry).|
+| `mango` | The old mango rice (mango + waybar + kitty + matugen).                        |
+| `dwl`   | The minimal dwl rice (compositor + foot/wofi/mako/yambar).                    |
+| `mono`  | The new mango rice: dwl's monochrome look + dwl keymap, ported onto mango.    |
 
-Both groups are listed in `base_groups`, so `dots install` deploys both.
+`base` and `dwl` are listed in `base_groups`, so `dots install` always deploys
+them. `mango` and `mono` are mutually-exclusive *profiles* — pick one:
+
+```sh
+dots config use mango   # old mango rice (matugen/ore waybar)
+dots config use mono    # new mango rice (dwl monochrome look)
+dots install
+```
+
+`dots config use` writes the chosen profile to the lockfile; `dots install`
+then compiles `base` + `dwl` + the chosen profile group.
+
+## Profiles
+
+`config.yml` maps each profile name to a list of groups (plus the
+`base_groups`, which are always included):
+
+| Profile | Resolves to               | Result                                    |
+| ------- | ------------------------- | ----------------------------------------- |
+| `mango` | `base` + `dwl` + `mango`  | **old** mango rice (matugen/ore waybar)   |
+| `mono`  | `base` + `dwl` + `mono`   | **new** mango rice (dwl monochrome look)  |
+
+The two profiles install `mango/mango/config.conf` and `mono/mango/config.conf`
+to the same destination (`~/.config/mango/config.conf`), so switching profiles
+is a clean flip between the two rices — no manual cleanup, because `dots
+install` removes files that are no longer in the active group set.
 
 ## Layout
 
@@ -38,10 +68,12 @@ Both groups are listed in `base_groups`, so `dots install` deploys both.
 into it:
 
 ```
-base/mango/config.conf      -> ~/.config/mango/config.conf
-base/waybar/style.css       -> ~/.config/waybar/style.css
+base/bashrc                 -> ~/.config/bashrc
+mango/mango/config.conf     -> ~/.config/mango/config.conf
+mango/waybar/style.css      -> ~/.config/waybar/style.css
 dwl/dwl/config.h            -> ~/.config/dwl/config.h
 dwl/foot/foot.ini           -> ~/.config/foot/foot.ini
+mono/mango/config.conf      -> ~/.config/mango/config.conf   (mono profile)
 ```
 
 ### Non-XDG apps
@@ -58,7 +90,7 @@ directly and intentionally left untracked — Plasma rewrites them itself
 
 ---
 
-## Mango (`base` group)
+## Mango (`mango` group)
 
 Mango is a wlroots-based Wayland compositor written in C++ (a lighter,
 Hyprland-adjacent tiling WM with animations, IPC, and many layouts). The
@@ -72,22 +104,22 @@ Full upstream docs: <https://github.com/DreamMaoMao/mango/wiki/>.
 
 | Source                                    | Destination                         | Purpose                                  |
 | ----------------------------------------- | ----------------------------------- | ---------------------------------------- |
-| `base/mango/config.conf`                  | `~/.config/mango/config.conf`       | Main compositor config                   |
-| `base/mango/colors.conf`                  | `~/.config/mango/colors.conf`       | Color overrides (generated by matugen)   |
-| `base/matugen/config.toml`                | `~/.config/matugen/config.toml`     | matugen template hooks                    |
-| `base/matugen/templates/*`                | `~/.config/matugen/templates/*`     | Color templates (waybar/kitty/mango/gtk/mako) |
-| `base/waybar/config.jsonc`                | `~/.config/waybar/config.jsonc`     | Bar layout & modules                      |
-| `base/waybar/style.css`                   | `~/.config/waybar/style.css`        | Bar theme (slot/hotbar look)             |
-| `base/waybar/colors.css`                  | `~/.config/waybar/colors.css`       | Ore palette (generated by matugen)       |
-| `base/waybar/scripts/*`                   | `~/.config/waybar/scripts/*`        | Tags / spotify / cava helper scripts     |
-| `base/kitty/kitty.conf`                   | `~/.config/kitty/kitty.conf`        | Terminal config                          |
-| `base/kitty/colors.conf`                  | `~/.config/kitty/colors.conf`       | Terminal colors (generated by matugen)   |
+| `mango/mango/config.conf`                 | `~/.config/mango/config.conf`       | Main compositor config                   |
+| `mango/mango/colors.conf`                 | `~/.config/mango/colors.conf`       | Color overrides (generated by matugen)   |
+| `mango/matugen/config.toml`               | `~/.config/matugen/config.toml`     | matugen template hooks                    |
+| `mango/matugen/templates/*`               | `~/.config/matugen/templates/*`     | Color templates (waybar/kitty/mango/gtk/mako) |
+| `mango/waybar/config.jsonc`               | `~/.config/waybar/config.jsonc`     | Bar layout & modules                      |
+| `mango/waybar/style.css`                  | `~/.config/waybar/style.css`        | Bar theme (slot/hotbar look)             |
+| `mango/waybar/colors.css`                 | `~/.config/waybar/colors.css`       | Ore palette (generated by matugen)       |
+| `mango/waybar/scripts/*`                  | `~/.config/waybar/scripts/*`        | Tags / spotify / cava helper scripts     |
+| `mango/kitty/kitty.conf`                  | `~/.config/kitty/kitty.conf`        | Terminal config                          |
+| `mango/kitty/colors.conf`                 | `~/.config/kitty/colors.conf`       | Terminal colors (generated by matugen)   |
 
 ### Theming (matugen)
 
 Colors are not hardcoded: [`matugen`](https://github.com/InioX/matugen)
 derives a palette from the current wallpaper and regenerates every target
-through the templates in `base/matugen/templates/`:
+through the templates in `mango/matugen/templates/`:
 
 - `waybar-colors.template` → `~/.config/waybar/colors.css` — the ore palette
   (`xp-green` = primary, `diamond` = secondary, `gold-ore` = tertiary,
@@ -100,7 +132,7 @@ through the templates in `base/matugen/templates/`:
 - `mako-colors.template` → `~/.config/mako/colors` (notifications), then
   `makoctl reload`.
 
-`base/mango/config.conf` does not define its own colors; it `source`s
+`mango/mango/config.conf` does not define its own colors; it `source`s
 `~/.config/mango/colors.conf` (the matugen output), so changing wallpaper and
 re-running matugen re-themes the entire WM in one shot.
 
@@ -212,7 +244,7 @@ The bar is themed as an inventory row: modules are beveled "slots", tags are
 - **Right** — tray, pulseaudio, network, CPU, memory, temperature, battery.
 
 **Tag modules** (`custom/tag1`–`tag9`) talk to mango over its IPC socket via
-`base/waybar/scripts/mango-tags.sh`:
+`mango/waybar/scripts/mango-tags.sh`:
 
 - `status <n>` reads tag state and emits JSON with classes `active`,
   `occupied`, `urgent`, or `empty`.
@@ -226,6 +258,102 @@ pattern: a `watch` daemon caches `playerctl` metadata to
 subcommands read the cache for art/title/prev/playpause/next, so no module
 ever blocks on `playerctl --follow`. The `cava-bars.sh` script streams cava's
 raw ASCII output as bar glyphs.
+
+---
+
+## Mango (mono) (`mono` group)
+
+The **new rice**: mango with the dwl monochrome aesthetic and the dwl keymap
+ported onto it. It keeps mango's feature set (animations, scroller/dwindle
+layouts, scratchpad, overview) while looking and behaving like dwl — square
+corners, strict black/white, 8px gaps, 2px borders, `grid` (fair) as the
+default layout, and foot/wofi/mako as the companion apps.
+
+It keeps **all** of the old rice's waybar features — Spotify widget (art /
+prev / play-pause / next / title), cava visualizer, tray, network, audio,
+temperature, battery — just restyled monochrome. What it drops for the
+lightweight dwl look is only the theming stack: **no matugen, no kitty, no
+rofi** (foot/wofi/static colors instead). The bar is a monochrome waybar
+(yambar's `dwl` module can't drive mango, which has no dwl status stream, so
+the dwl yambar look is reproduced in waybar instead).
+
+### Files
+
+| Source                            | Destination                      | Purpose                              |
+| --------------------------------- | -------------------------------- | ------------------------------------ |
+| `mono/mango/config.conf`          | `~/.config/mango/config.conf`    | Compositor config (dwl-ported)       |
+| `mono/mango/colors.conf`          | `~/.config/mango/colors.conf`    | Static monochrome palette            |
+| `mono/waybar/config.jsonc`        | `~/.config/waybar/config.jsonc`  | Bar layout (full module set)         |
+| `mono/waybar/style.css`           | `~/.config/waybar/style.css`     | Monochrome bar theme                 |
+| `mono/waybar/scripts/mango-tags.sh`| `~/.config/waybar/scripts/mango-tags.sh` | Mango IPC tag helper          |
+| `mono/waybar/scripts/spotify-mpris.sh`| `~/.config/waybar/scripts/spotify-mpris.sh` | Spotify MPRIS widget helper |
+| `mono/waybar/scripts/cava-bars.sh`| `~/.config/waybar/scripts/cava-bars.sh` | cava ASCII visualizer helper      |
+
+`foot`, `wofi`, and `mako` configs come from the `dwl` group (which is in
+`base_groups`), so the `mono` profile reuses them without duplication.
+
+### What was ported from dwl
+
+| dwl (`config.h`)            | mono (`config.conf`)                       |
+| --------------------------- | ------------------------------------------ |
+| `rootcolor #000000`         | `rootcolor=0x000000FF` (colors.conf)       |
+| `bordercolor #333333`       | `bordercolor=0x333333ff`                   |
+| `focuscolor #ffffff`        | `focuscolor=0xffffffff`                    |
+| `urgentcolor #ffffff`       | `urgentcolor=0xFFFFFFFF` (colors.conf)     |
+| `gappx=8`                   | `gappih/gappiv/gappoh/gappov=8`            |
+| `borderpx=2`                | `borderpx=2`                               |
+| (square, no radius)         | `border_radius=0`                          |
+| `smartgaps=1`               | `smartgaps=1`                              |
+| `sloppyfocus=1`             | `sloppyfocus=1`                            |
+| `layouts[0] = fair`         | `tagrule=...layout_name:grid` (all tags)   |
+| terminal `foot`             | `bind=Alt,Return,spawn,foot`               |
+| launcher `wofi`             | `bind=Alt,space,spawn,wofi --show drun`    |
+
+### Keybindings
+
+The keymap is the **old mango rice** keymap (identical to the `mango` group),
+so muscle memory carries over. The only differences from the old rice are the
+spawn targets: `Alt+Return` → `foot` (was `kitty`) and `Alt+Space` → `wofi`
+(was `fuzzel`), plus `Super+Shift+s` → `screenshot` (unchanged). Highlights:
+
+| Binding                   | Action                              |
+| ------------------------- | ----------------------------------- |
+| `Alt+Space` / `Alt+Return`| Launcher (wofi) / terminal (foot)   |
+| `Super+Tab`               | Focus next window                   |
+| `Alt+Left/Right/Up/Down`  | Focus window by direction           |
+| `Super+Shift+Arrow`       | Swap window with neighbor           |
+| `Super+Left/Right`        | View prev/next tag                  |
+| `Ctrl+Left/Right`         | View prev/next tag (with clients)   |
+| `Ctrl+Super+Left/Right`   | Move client to prev/next tag        |
+| `Ctrl+1..9` / `Alt+1..9`  | View tag / move client to tag       |
+| `Super+g`                 | Toggle global (pin to all tags)     |
+| `Super+i` / `Super+o`     | Minimize / toggle overlay           |
+| `Super+Shift+I`           | Restore minimized                   |
+| `Alt+z` / `Alt+Tab`       | Scratchpad / jump                   |
+| `Alt+f` / `Alt+a`         | Fullscreen / maximize               |
+| `Alt+\`                   | Toggle floating                     |
+| `Super+n`                 | Switch layout                       |
+| `Alt+Shift+X/Z/R`         | Inc gaps / toggle gaps              |
+| `Alt+Shift+Left/Right`    | Focus prev/next monitor             |
+| `Super+Alt+Left/Right`    | Move client to prev/next monitor    |
+| `Super+l` / `Super+Shift+Escape` | Lock / power menu             |
+
+Media keys (volume/brightness) are also bound (an addition the old rice
+lacked, kept here so hardware keys work).
+
+### Autostart (from `config.conf`)
+
+```
+exec=~/.local/bin/monitor-layout
+exec=pkill waybar; waybar
+exec=pkill -f 'mango-tags.sh watch'; ~/.config/waybar/scripts/mango-tags.sh watch
+exec=pkill -f 'spotify-mpris.sh watch'; ~/.config/waybar/scripts/spotify-mpris.sh watch
+exec=pkill swaybg; if [ -f ~/.config/dwl/wallpaper ]; then swaybg -i ~/.config/dwl/wallpaper -m fill & fi
+exec=pkill mako; mako
+```
+
+The wallpaper follows dwl's convention: drop any image at
+`~/.config/dwl/wallpaper`.
 
 ---
 
@@ -359,8 +487,8 @@ them via `greetd`/`tuigreet`, and installs the companion apps (`foot`, `wofi`,
 `yambar`, `rofi`, `waybar`, `kitty`, `cava`, `mako`, `matugen`, …) plus the
 Iosevka Nerd Font. Full reproducibility docs are in that repo's README.
 
-The mango setup is the everyday rice; dwl is the minimal, reproducible
-alternative.
+The mango setup is the everyday rice (selectable via the `mango` or `mono`
+profile); dwl is the minimal, reproducible alternative.
 
 ---
 
@@ -387,10 +515,13 @@ details.
 
 ```sh
 git clone git@github.com:eon5942/eonsdotfiles.git ~/.local/etc
+
+# pick your rice (old mango = "mango", new dwl-ported mango = "mono")
+dots config use mono      # or: dots config use mango
 dots install
 ```
 
-you will have to install on a fresh setup, mango rofi waybar wayland cava lavat fastfetch kitty sddm opencode librewolf btop matugen mako
+you will have to install on a fresh setup, mango rofi waybar wayland cava lavat fastfetch kitty sddm opencode librewolf btop matugen mako foot wofi yambar swaybg
 
 Requires the `dots` binary built from
 [evanpurkhiser/dots](https://github.com/evanpurkhiser/dots) (`main` branch)

@@ -30,7 +30,7 @@ of dwm.
 
 | Group   | Description                                                                   |
 | ------- | ----------------------------------------------------------------------------- |
-| `base`  | Shared shell/app config — installed everywhere, always (a `base_groups` entry).|
+| `base`  | Shared shell/app/editor config (fish, btop, fastfetch, micro, nvim, tmux) — installed everywhere, always (a `base_groups` entry). |
 | `mango` | The old mango rice (mango + waybar + kitty + matugen).                        |
 | `dwl`   | The minimal dwl rice (compositor + foot/wofi/mako/yambar).                    |
 | `mono`  | The new mango rice: dwl's monochrome look + dwl keymap, ported onto mango.    |
@@ -87,6 +87,36 @@ full mechanism.
 GTK3/4 (`~/.config/gtk-{3,4}.0/settings.ini`) and `kdeglobals` are edited
 directly and intentionally left untracked — Plasma rewrites them itself
 (e.g. from System Settings), so tracking them here would just fight it.
+
+## Editor & terminal (`base` group)
+
+### nvim (`base/nvim`)
+
+Full Neovim setup (lazy.nvim), formerly its own repo (`eon5942/neovim-config`)
+and now folded in here. Rose Pine theme, Telescope, nvim-cmp + LSP (mason),
+treesitter, conform, VS Code-style keybindings, multicursor, dashboard.
+
+| Source                          | Destination                       | Purpose                  |
+| ------------------------------- | --------------------------------- | ------------------------ |
+| `base/nvim/init.lua`            | `~/.config/nvim/init.lua`         | Entry point (lazy.nvim)  |
+| `base/nvim/lazy-lock.json`      | `~/.config/nvim/lazy-lock.json`   | Pinned plugin commits    |
+| `base/nvim/lua/config/*.lua`    | `~/.config/nvim/lua/config/`      | `options.lua` + `keymaps.lua` |
+| `base/nvim/lua/plugins/*.lua`   | `~/.config/nvim/lua/plugins/`     | Plugin specs (editor/langs/lsp/theme/ui) |
+
+### tmux (`base/tmux`)
+
+Monochrome tmux rice matching the dwl/mono aesthetic — black/white, Iosevka
+Nerd Font glyphs, powerline-style bottom bar (battery · date · time). Prefix
+is `C-a`; `C-a -`/`C-a |` split, `C-a h/j/k/l` move panes, vi copy mode.
+
+Plugins are managed with [tpm](https://github.com/tmux-plugins/tpm), which is
+auto-bootstrapped into `~/.config/tmux/plugins/tpm` on first launch, then
+installed with `C-a I`. Ships with `tmux-sensible`, `tmux-resurrect`,
+`tmux-continuum`, and `vim-tmux-navigator`.
+
+| Source                 | Destination                   | Purpose       |
+| ---------------------- | ----------------------------- | ------------- |
+| `base/tmux/tmux.conf`  | `~/.config/tmux/tmux.conf`    | tmux config   |
 
 ---
 

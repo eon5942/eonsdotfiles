@@ -1,0 +1,84 @@
+# keybinds
+# Legend: C- = Ctrl, M- = Alt, S- = Shift
+
+================================================================================
+# tmux
+================================================================================
+
+prefix: C-a   (press C-a, release, then the key below)
+
+## Sessions
+  C-a s        session picker (fullscreen)
+  C-a w        window picker
+  C-a d        detach from session
+  C-a $        rename session
+  C-a D        choose a client to detach
+  C-a C-s      jump to last session
+
+## Windows
+  C-a c        new window (opens in current dir)
+  C-a ,        rename window
+  C-a &        kill window
+  C-a f        find window by name
+  C-a n        next window
+  C-a p        previous window
+  C-a Tab      next window
+  C-a 1-9      jump to window number
+  C-a C-h      move window left
+  C-a C-l      move window right
+
+## Panes
+  C-a |        split vertically (left/right)
+  C-a -        split horizontally (top/bottom)
+  C-a _        split horizontally (top/bottom)
+  C-a h/j/k/l  move to pane (left/down/up/right)
+  C-a o        next pane
+  C-a q        show pane numbers (type one to jump)
+  Alt+arrows   move to pane (no prefix needed)
+  C-a H/J/K/L  resize pane (hold to repeat)
+  C-a M-arrows resize pane (bigger steps)
+  C-a x        kill pane
+  C-a z        zoom / unzoom pane
+  C-a !        move pane to its own window
+  C-a { / }    swap panes
+  C-a Space    cycle layout
+  C-a M-1      layout: even-horizontal
+  C-a M-2      layout: even-vertical
+  C-a M-3      layout: main-horizontal
+  C-a M-4      layout: main-vertical
+  C-a M-5      layout: tiled
+
+## Copy / paste (vi mode)
+  C-a [        enter copy mode
+  C-a ]        paste latest buffer
+  C-a =        choose a buffer to paste
+  C-a P        paste via buffer picker
+  in copy mode:
+    v          start selection
+    V          select whole line
+    C-v        block/rectangle selection
+    y          copy selection (goes to system clipboard)
+    Esc        cancel
+  (selection auto-copies to clipboard via OSC 52 — works in foot)
+
+## Misc
+  C-a r        reload tmux config
+  C-a t        clock
+  C-a :        tmux command prompt
+  C-a I        install plugins (tpm)
+  C-a U        update plugins (tpm)
+  C-a M-u      remove unused plugins
+
+## Plugins
+  tpm, tmux-sensible, tmux-resurrect, tmux-continuum, vim-tmux-navigator
+  - sessions auto-save every 15 min and restore on start (continuum + resurrect)
+  - C-h/j/k/l move between vim splits and tmux panes seamlessly (vim-tmux-navigator)
+
+## Status bar
+  left   — session name (shows "C-a" while prefix is held)
+  middle — window list (active window is inverted)
+  right  — battery · date · time
+
+## Notes
+  - Mouse is on: click to select pane, drag borders to resize, scroll to history.
+  - Default shell is fish. Font is Iosevka Nerd Font Mono.

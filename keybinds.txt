@@ -1,5 +1,73 @@
 # keybinds
-# Legend: C- = Ctrl, M- = Alt, S- = Shift
+# Legend: C- = Ctrl, M- = Alt, S- = Shift, Super = Windows/logo key
+
+================================================================================
+# mango
+================================================================================
+
+compositor: mango (mono profile)   |   terminal: foot   |   launcher: wofi
+caps lock = escape
+
+## Launch / system
+  Alt+Return             terminal (foot)
+  Alt+Space              launcher (wofi)
+  Super+Shift+s          screenshot (region)
+  Super+Escape           suspend
+  Super+l                lock (swaylock)
+  Super+Shift+Escape     power menu
+  Super+m                quit mango
+  Alt+q                  kill focused window
+  Super+r                reload config
+
+## Windows
+  Super+Tab              focus next window
+  Alt+Left/Right/Up/Down focus window by direction
+  Super+Shift+arrows     swap window with neighbor
+  Super+g                toggle global (pin to all tags)
+  Alt+Tab                toggle jump
+  Alt+\                  toggle floating
+  Alt+a                  toggle maximize-to-screen
+  Alt+f                  toggle fullscreen
+  Alt+Shift+f            toggle fake fullscreen
+  Super+i                minimize
+  Super+o                toggle overlay
+  Super+Shift+i          restore minimized
+  Alt+z                  toggle scratchpad
+
+## Tags / workspaces
+  Super+Left/Right       view previous / next tag
+  Ctrl+Left/Right        view prev/next tag (bring clients)
+  Ctrl+Super+Left/Right  move window to prev/next tag
+  Ctrl+1..9              view tag 1-9
+  Alt+1..9               move window to tag 1-9
+
+## Layouts
+  Super+n                switch layout
+  Alt+e                  set proportion 1.0
+  Alt+x                  cycle proportion preset (scroller)
+  Alt+Super+Ctrl+arrows  scroller stack move
+  Alt+Shift+Return       dwindle split-direction toggle
+  Alt+Shift+x / z        increase / decrease gaps
+  Alt+Shift+r            toggle gaps
+
+## Monitors
+  Alt+Shift+Left/Right   focus previous / next monitor
+  Super+Alt+Left/Right   move window to previous / next monitor
+
+## Floating windows
+  Ctrl+Shift+arrows      move floating window
+  Ctrl+Alt+arrows        resize floating window
+
+## Mouse
+  Super+LMB drag         move window
+  MMB                    toggle maximize-to-screen
+  Super+RMB drag         resize window
+
+## Media keys
+  XF86AudioRaise/Lower   volume up / down
+  XF86AudioMute          mute
+  XF86AudioMicMute       mute mic
+  XF86MonBrightness      brightness up / down
 
 ================================================================================
 # tmux
@@ -82,3 +150,118 @@ prefix: C-a   (press C-a, release, then the key below)
 ## Notes
   - Mouse is on: click to select pane, drag borders to resize, scroll to history.
   - Default shell is fish. Font is Iosevka Nerd Font Mono.
+
+================================================================================
+# nvim
+================================================================================
+
+leader = Space   (press <leader> then the key)
+
+## Basics
+  <leader>w     save
+  <leader>q     quit
+  <leader>c     close buffer
+  Esc           clear search highlights
+  C-h/j/k/l     go to left/down/up/right window
+  <leader>y     yank to clipboard (visual too)
+  <leader>Y     yank line to clipboard
+
+## VS Code-style
+  C-p           find files (Telescope)
+  C-S-p         command palette
+  C-S-f         search in files (live grep)
+  C-f           find in current file
+  C-b           toggle file tree sidebar
+  C-S-e         focus explorer
+  C-S-x         extensions (Lazy)
+  C-w           close tab/buffer
+  C-S-k         delete line
+  C-g           go to line
+  C-/           toggle comment
+  C-.           code action (quick fix)
+  F2            rename symbol
+  F12           go to definition
+  S-F12         find references
+  C-S-o         go to symbol
+  C-S-m         problems (Trouble diagnostics)
+
+## Telescope (fuzzy find)
+  <leader>ff    find files
+  <leader>fg    live grep
+  <leader>fb    buffers
+  <leader>fh    help tags
+  <leader>fr    recent files
+  <leader>fc    commands
+  <leader>fk    keymaps
+  <leader>fs    git status
+  <leader>/     fuzzy find in buffer
+
+## LSP / code
+  gd            go to definition
+  K             hover
+  gr            references
+  gi            implementation
+  <leader>rn    rename
+  <leader>ca    code action
+  <leader>r     run code (code_runner)
+  <leader>rc    close runner
+  <leader>cf    format file (conform)
+  <leader>l     change language mode
+
+## Git
+  <leader>gg    git (neogit)
+  ]c / [c       next / prev hunk
+  <leader>hs    stage hunk
+  <leader>hr    reset hunk
+  <leader>hS    stage buffer
+  <leader>hu    undo stage hunk
+  <leader>hp    preview hunk
+  <leader>hb    blame line
+  <leader>tb    toggle blame
+  <leader>hd    diff this
+  <leader>td    toggle deleted
+
+## Navigation
+  <leader>e     toggle file tree (nvim-tree)
+  s             flash jump
+  S             flash treesitter jump
+  ]] / [[       next / prev reference (vim-illuminate)
+  <A-j>         move line down
+  <A-k>         move line up
+  <A-Down>/<A-Up> move line down / up
+
+## Editing / multicursor
+  C-d           add cursor to next match
+  C-S-Up/Down   add cursor above / below
+  C-leftclick   add cursor with click
+  C-q           toggle cursors
+  <leader>x     delete cursor
+
+## Terminal
+  C-`           toggle terminal (toggleterm)
+
+## Completion (insert mode)
+  C-Space       trigger completion
+  Tab / S-Tab   next / prev item
+  CR            confirm
+  C-e           abort
+  C-b / C-f     scroll docs
+
+## Trouble (diagnostics panel)
+  <leader>xx    toggle diagnostics
+  <leader>xX    buffer diagnostics
+  <leader>cs    symbols
+  <leader>xl    location list
+  <leader>xq    quickfix list
+
+## Dashboard (alpha, on launch)
+  f             find file
+  r             recent files
+  g             grep
+  e             file tree
+  q             quit
+
+## Notes
+  - Theme: Rose Pine. `:Lazy` opens the plugin manager.
+  - Format-on-save is on (conform) with stylua/black/rustfmt/clang-format/shfmt/prettier/nixfmt.
+  - Sessions auto-restore via auto-session.

@@ -515,9 +515,10 @@ exists):
 
 The mango keymap ported to X11 with an Everforest theme: same 9-tag Ctrl/Alt
 key scheme, same Iosevka Nerd Font Mono, a flat mono-style bar (matching the
-`mono` group's bar), and an evergreen-forest wallpaper. Runs on
-[i3](https://i3wm.org) with gaps, polybar (bar), rofi (launcher), picom
-(compositor), dunst (notifications), and kitty (terminal). Browser: librewolf.
+`mono` group's bar), an evergreen-forest wallpaper, and a fair (grid) tiling
+layout. Runs on [i3](https://i3wm.org) with gaps, polybar (bar), rofi
+(launcher), picom (compositor, with blur), dunst (notifications), and kitty
+(terminal, semi-transparent). Browser: librewolf.
 
 ### Files
 
@@ -536,7 +537,7 @@ key scheme, same Iosevka Nerd Font Mono, a flat mono-style bar (matching the
 | `i3/fastfetch/config.jsonc`         | `~/.config/fastfetch/config.jsonc`   | system info                |
 | `i3/gtk-3.0/*`                      | `~/.config/gtk-3.0/*`                | GTK3 dark + accent         |
 | `i3/gtk-4.0/*`                      | `~/.config/gtk-4.0/*`                | GTK4 dark + accent         |
-| `i3/scripts/*`                      | `~/.config/scripts/*`                | screenshot, powermenu, master-stack, zoom |
+| `i3/scripts/*`                      | `~/.config/scripts/*`                | screenshot, powermenu, fair layout |
 
 ### Keybinds
 
@@ -549,8 +550,7 @@ changes are the spawn targets and i3-specific approximations:
 - `Super+g` → sticky (i3's pin-to-all-workspaces).
 - `Super+n` / `Alt+Shift+Return` → cycle / toggle split layout.
 - `Alt+Shift+x` / `z` → gaps +/-, `Alt+Shift+r` → toggle gaps.
-- `Super+Shift+Return` → zoom (swap focused window into master).
-- `Super+h` / `Super+;` → shrink / grow the master column.
+- `Super+h` / `Super+;` → shrink / grow the focused window.
 
 ### Install
 

@@ -87,7 +87,7 @@ exec_always --no-startup-id feh --no-fehbg --bg-fill ~/.config/i3/wallpaper
 exec_always --no-startup-id setxkbmap -option caps:escape
 exec --no-startup-id nm-applet
 exec --no-startup-id xss-lock -- i3lock -i ~/.config/i3/wallpaper -c 000000
-exec --no-startup-id python3 ~/.config/scripts/master-stack.py
+exec --no-startup-id python3 ~/.config/scripts/fair.py
 
 # ─────────────────────────────────────────────────────────────
 # Launch / system  (mango parity)
@@ -138,8 +138,7 @@ bindsym $mod+o exec $winlist
 bindsym $mod+n layout toggle split
 bindsym Mod1+Shift+Return layout toggle split
 
-# master-stack controls
-bindsym $mod+Shift+Return exec --no-startup-id python3 ~/.config/scripts/zoom.py
+# resize (works in any layout)
 bindsym $mod+h resize shrink width 5 ppt
 bindsym $mod+semicolon resize grow width 5 ppt
 

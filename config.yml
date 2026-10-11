@@ -13,6 +13,7 @@ groups:
   - mango
   - dwl
   - mono
+  - i3
 
 # Groups to compile for all profiles
 base_groups: [base, dwl]
@@ -20,9 +21,11 @@ base_groups: [base, dwl]
 # Rice profiles: pick one on a fresh install with `dots config use <name>`.
 #   mango -> base + dwl + mango  (old mango rice, matugen/ore waybar)
 #   mono  -> base + dwl + mono   (new mango rice, dwl monochrome look)
+#   i3    -> base + dwl + i3     (X11 rice: i3 + polybar + rofi + picom)
 profiles:
   mango: [mango]
   mono: [mono]
+  i3: [i3]
 
 # Keep the lockfile out of the version-controlled source tree
 lockfile_path: ${HOME}/.local/state/dots/dotlock.json

@@ -1,0 +1,5 @@
+/* Everforest accent colors for libadwaita / GTK4 apps */
+@define-color accent_color #a7c080;
+@define-color accent_bg_color #a7c080;
+@define-color accent_fg_color #232a2e;
+@define-color destructive_color #e67e80;

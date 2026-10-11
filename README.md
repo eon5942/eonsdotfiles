@@ -7,22 +7,24 @@ Personal configuration files, managed with [`dots`](https://github.com/evanpurkh
 made here and then deployed with `dots install` — editing the installed copy
 directly has no effect on the source.
 
-This repo tracks **three complete compositor setups**:
+This repo tracks **four setups** — three Wayland compositors plus an X11 i3 rice:
 
 | Setup       | Compositor                                              | Group   | Status bar | Launcher | Terminal | Theme                          |
 | ----------- | ------------------------------------------------------- | ------- | ---------- | -------- | -------- | ------------------------------ |
 | Mango       | [mango](https://github.com/DreamMaoMao/mango) (wlroots) | `mango` | waybar     | fuzzel   | kitty    | Minecraft-ore palette (matugen) |
 | Mango (mono)| [mango](https://github.com/DreamMaoMao/mango) (wlroots) | `mono`  | waybar     | wofi     | foot     | Monochrome (black/white)        |
 | dwl         | [dwl](https://github.com/djpohly/dwl) (wlroots)         | `dwl`   | yambar     | wofi     | foot     | Monochrome (black/white)        |
+| i3          | [i3](https://i3wm.org) (X11)                            | `i3`    | polybar    | rofi     | kitty    | Everforest                      |
 
-All three share the same font (Iosevka Nerd Font Mono), the same 9-tag
+All four share the same font (Iosevka Nerd Font Mono), the same 9-tag
 Ctrl/Alt key scheme, and the same dual-monitor layout (`HDMI-A-1` primary at
 the origin, `eDP-1` to the right). They differ in philosophy: **mango**
 (`mango` group) is a full-featured animated compositor with a themed bar and
 per-wallpaper color generation; **mango (mono)** (`mono` group) is the *same*
 compositor with the dwl monochrome aesthetic and dwl keymap ported onto it;
 **dwl** is the stripped-down, compile-time-configured compositor in the spirit
-of dwm.
+of dwm; **i3** (`i3` group) ports the mango keymap to X11 with an Everforest
+theme (i3 + polybar + rofi + picom + kitty).
 
 ---
 
@@ -34,6 +36,7 @@ of dwm.
 | `mango` | The old mango rice (mango + waybar + kitty + matugen).                        |
 | `dwl`   | The minimal dwl rice (compositor + foot/wofi/mako/yambar).                    |
 | `mono`  | The new mango rice: dwl's monochrome look + dwl keymap, ported onto mango.    |
+| `i3`    | The X11 rice: i3 + polybar + rofi + picom + kitty (Everforest palette).       |
 
 `base` and `dwl` are listed in `base_groups`, so `dots install` always deploys
 them. `mango` and `mono` are mutually-exclusive *profiles* — pick one:
@@ -41,6 +44,7 @@ them. `mango` and `mono` are mutually-exclusive *profiles* — pick one:
 ```sh
 dots config use mango   # old mango rice (matugen/ore waybar)
 dots config use mono    # new mango rice (dwl monochrome look)
+dots config use i3      # X11 mango rice (i3 + polybar + rofi)
 dots install
 ```
 
@@ -56,6 +60,7 @@ then compiles `base` + `dwl` + the chosen profile group.
 | ------- | ------------------------- | ----------------------------------------- |
 | `mango` | `base` + `dwl` + `mango`  | **old** mango rice (matugen/ore waybar)   |
 | `mono`  | `base` + `dwl` + `mono`   | **new** mango rice (dwl monochrome look)  |
+| `i3`    | `base` + `dwl` + `i3`     | **X11** Everforest rice (i3 + polybar + rofi) |
 
 The two profiles install `mango/mango/config.conf` and `mono/mango/config.conf`
 to the same destination (`~/.config/mango/config.conf`), so switching profiles
@@ -503,6 +508,58 @@ exists):
 - **yambar** (`config.yml`) — 26px top bar, black background/white foreground.
   Left: the `dwl` tag module (9 tags reading `/home/eon/.cache/dwltags`,
   selected tag inverted). Right: CPU, memory, battery (`BAT1`), clock.
+
+---
+
+## i3 (`i3` group)
+
+The mango keymap ported to X11 with an Everforest theme: same 9-tag Ctrl/Alt
+key scheme, same Iosevka Nerd Font Mono, a flat mono-style bar (matching the
+`mono` group's bar), and an evergreen-forest wallpaper. Runs on
+[i3](https://i3wm.org) with gaps, polybar (bar), rofi (launcher), picom
+(compositor), dunst (notifications), and kitty (terminal). Browser: librewolf.
+
+### Files
+
+| Source                              | Destination                          | Purpose                    |
+| ----------------------------------- | ------------------------------------ | -------------------------- |
+| `i3/i3/config`                      | `~/.config/i3/config`                | i3 config (keybinds+gaps)  |
+| `i3/i3/wallpaper`                   | `~/.config/i3/wallpaper`             | wallpaper                  |
+| `i3/polybar/config.ini`             | `~/.config/polybar/config.ini`       | bar (flat mono-style)       |
+| `i3/polybar/launch.sh`              | `~/.config/polybar/launch.sh`        | bar launcher               |
+| `i3/polybar/scripts/*`              | `~/.config/polybar/scripts/*`        | media/battery/temp/network |
+| `i3/picom/picom.conf`               | `~/.config/picom/picom.conf`         | blur, shadows              |
+| `i3/rofi/everforest.rasi`           | `~/.config/rofi/everforest.rasi`     | launcher theme             |
+| `i3/dunst/dunstrc`                  | `~/.config/dunst/dunstrc`            | notifications              |
+| `i3/kitty/kitty.conf`               | `~/.config/kitty/kitty.conf`         | terminal config            |
+| `i3/kitty/colors.conf`              | `~/.config/kitty/colors.conf`        | terminal palette           |
+| `i3/fastfetch/config.jsonc`         | `~/.config/fastfetch/config.jsonc`   | system info                |
+| `i3/gtk-3.0/*`                      | `~/.config/gtk-3.0/*`                | GTK3 dark + accent         |
+| `i3/gtk-4.0/*`                      | `~/.config/gtk-4.0/*`                | GTK4 dark + accent         |
+| `i3/scripts/*`                      | `~/.config/scripts/*`                | screenshot, powermenu      |
+
+### Keybinds
+
+The keymap is a 1:1 port of the mango keymap (see the mango section). The only
+changes are the spawn targets and i3-specific approximations:
+
+- `Alt+Space` → rofi (`-show drun`), `Alt+Return` → kitty.
+- `Super+o` → rofi window switcher (i3 has no overview).
+- `Super+i` / `Super+Shift+i` → minimize / restore via the scratchpad.
+- `Super+g` → sticky (i3's pin-to-all-workspaces).
+- `Super+n` / `Alt+Shift+Return` → cycle / toggle split layout.
+- `Alt+Shift+x` / `z` → gaps +/-, `Alt+Shift+r` → toggle gaps.
+
+### Install
+
+```sh
+dots config use i3
+dots install
+```
+
+Packages: `i3 polybar picom rofi dunst feh kitty fastfetch maim xclip xdotool
+libnotify playerctl pavucontrol brightnessctl xss-lock i3lock setxkbmap`,
+plus librewolf (flatpak: `io.gitlab.librewolf-community`).
 
 ---
 

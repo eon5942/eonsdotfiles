@@ -1,0 +1,47 @@
+# ─────────────────────────────────────────────
+#  dunst — Everforest
+# ─────────────────────────────────────────────
+
+[global]
+    font = Iosevka Nerd Font Mono 11
+    origin = top-right
+    offset = 16x16
+    width = 340
+    height = 120
+    padding = 12
+    horizontal_padding = 12
+    frame_width = 2
+    separator_height = 2
+    corner_radius = 0
+    transparency = 0
+    icon_position = left
+    max_icon_size = 48
+    markup = full
+    alignment = left
+    word_wrap = yes
+    show_indicators = no
+    sort = yes
+    idle_threshold = 120
+    monitor = 0
+    follow = mouse
+
+    background = "#232a2e"
+    foreground = "#d3c6aa"
+    frame_color = "#a7c080"
+    separator_color = "#3d484d"
+
+[urgency_low]
+    background = "#2d353b"
+    foreground = "#9da9a0"
+    timeout = 4
+
+[urgency_normal]
+    background = "#232a2e"
+    foreground = "#d3c6aa"
+    timeout = 6
+
+[urgency_critical]
+    background = "#e67e80"
+    foreground = "#232a2e"
+    frame_color = "#e67e80"
+    timeout = 0

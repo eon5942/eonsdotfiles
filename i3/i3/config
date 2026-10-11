@@ -1,0 +1,240 @@
+# ─────────────────────────────────────────────────────────────
+#  i3 — Everforest theme (flat, mono-style)
+#  Keybinds ported 1:1 from the mango compositor setup.
+#  Mod = Super(Mod4), Alt = Mod1, Ctrl = Control
+# ─────────────────────────────────────────────────────────────
+
+set $mod Mod4
+set $term kitty
+set $launcher "rofi -show drun -theme ~/.config/rofi/everforest.rasi"
+set $winlist  "rofi -show window -theme ~/.config/rofi/everforest.rasi"
+
+# ─────────────────────────────────────────────────────────────
+# Font
+# ─────────────────────────────────────────────────────────────
+font pango:Iosevka Nerd Font Mono 11
+
+# ─────────────────────────────────────────────────────────────
+# Gaps & borders  (mango: gappi 5 / gappo 10 / borderpx 4)
+# ─────────────────────────────────────────────────────────────
+gaps inner 5
+gaps outer 10
+smart_gaps on
+smart_borders on
+
+default_border pixel 4
+default_floating_border pixel 4
+hide_edge_borders smart
+for_window [class=".*"] border pixel 4
+
+# ─────────────────────────────────────────────────────────────
+# Colors — Everforest (dark)
+# ─────────────────────────────────────────────────────────────
+set $bg_dim  #232a2e
+set $bg0     #2d353b
+set $bg1     #343f44
+set $bg2     #3d484d
+set $bg3     #475258
+set $fg      #d3c6aa
+set $grey0   #7a8478
+set $grey1   #859289
+set $grey2   #9da9a0
+set $red     #e67e80
+set $orange  #e69875
+set $yellow  #dbbc7f
+set $green   #a7c080
+set $aqua    #83c092
+set $blue    #7fbbb3
+set $purple  #d699b6
+
+#                     border      backgr.  text       indicator  child_border
+client.focused          $green    $bg0     $fg        $green     $green
+client.focused_inactive $bg3      $bg_dim  $grey2     $bg3       $bg1
+client.unfocused        $bg1      $bg_dim  $grey0     $bg1       $bg1
+client.urgent           $red      $bg0     $red       $red       $red
+client.placeholder      $bg1      $bg_dim  $grey0     $bg1       $bg1
+client.background       $bg_dim
+
+# ─────────────────────────────────────────────────────────────
+# Workspaces (tags 1-9)
+# ─────────────────────────────────────────────────────────────
+set $ws1  "1"
+set $ws2  "2"
+set $ws3  "3"
+set $ws4  "4"
+set $ws5  "5"
+set $ws6  "6"
+set $ws7  "7"
+set $ws8  "8"
+set $ws9  "9"
+
+# ─────────────────────────────────────────────────────────────
+# Behavior
+# ─────────────────────────────────────────────────────────────
+workspace_layout default
+focus_follows_mouse no
+mouse_warping output
+workspace_auto_back_and_forth yes
+floating_modifier $mod
+
+# ─────────────────────────────────────────────────────────────
+# Autostart
+# ─────────────────────────────────────────────────────────────
+exec_always --no-startup-id ~/.config/polybar/launch.sh
+exec_always --no-startup-id picom --config ~/.config/picom/picom.conf
+exec_always --no-startup-id dunst
+exec_always --no-startup-id feh --no-fehbg --bg-fill ~/.config/i3/wallpaper
+exec_always --no-startup-id setxkbmap -option caps:escape
+exec --no-startup-id nm-applet
+exec --no-startup-id xss-lock -- i3lock -i ~/.config/i3/wallpaper -c 000000
+
+# ─────────────────────────────────────────────────────────────
+# Launch / system  (mango parity)
+# ─────────────────────────────────────────────────────────────
+bindsym Mod1+Return exec $term
+bindsym Mod1+space exec $launcher
+bindsym $mod+Shift+s exec ~/.config/scripts/screenshot.sh select
+bindsym $mod+Escape exec systemctl suspend
+bindsym $mod+l exec i3lock -i ~/.config/i3/wallpaper -c 000000
+bindsym $mod+Shift+Escape exec ~/.config/scripts/powermenu.sh
+bindsym $mod+m exit
+bindsym Mod1+q kill
+bindsym $mod+r reload
+
+# ─────────────────────────────────────────────────────────────
+# Window focus / move  (mango parity)
+# ─────────────────────────────────────────────────────────────
+bindsym $mod+Tab focus right
+bindsym Mod1+Tab workspace back_and_forth
+
+bindsym Mod1+Left focus left
+bindsym Mod1+Right focus right
+bindsym Mod1+Up focus up
+bindsym Mod1+Down focus down
+
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Right move right
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Down move down
+
+bindsym $mod+g sticky toggle
+bindsym Mod1+backslash floating toggle
+bindsym Mod1+a fullscreen toggle
+bindsym Mod1+f fullscreen toggle
+bindsym Mod1+Shift+f fullscreen toggle
+
+# minimize / restore (scratchpad)
+bindsym $mod+i move scratchpad
+bindsym $mod+Shift+i scratchpad show
+bindsym Mod1+z scratchpad show
+
+# overview -> window switcher
+bindsym $mod+o exec $winlist
+
+# ─────────────────────────────────────────────────────────────
+# Layouts  (mango parity)
+# ─────────────────────────────────────────────────────────────
+bindsym $mod+n layout toggle split
+bindsym Mod1+Shift+Return layout toggle split
+
+# ─────────────────────────────────────────────────────────────
+# Tags / workspaces  (mango parity)
+#   Ctrl+1..9     = view tag
+#   Alt+1..9      = move window to tag
+# ─────────────────────────────────────────────────────────────
+bindsym $mod+Left workspace prev
+bindsym $mod+Right workspace next
+bindsym Control+Left exec --no-startup-id i3-msg "move container to workspace prev; workspace prev"
+bindsym Control+Right exec --no-startup-id i3-msg "move container to workspace next; workspace next"
+bindsym Control+$mod+Left move container to workspace prev
+bindsym Control+$mod+Right move container to workspace next
+
+bindsym Control+1 workspace number $ws1
+bindsym Control+2 workspace number $ws2
+bindsym Control+3 workspace number $ws3
+bindsym Control+4 workspace number $ws4
+bindsym Control+5 workspace number $ws5
+bindsym Control+6 workspace number $ws6
+bindsym Control+7 workspace number $ws7
+bindsym Control+8 workspace number $ws8
+bindsym Control+9 workspace number $ws9
+
+bindsym Mod1+1 move container to workspace number $ws1
+bindsym Mod1+2 move container to workspace number $ws2
+bindsym Mod1+3 move container to workspace number $ws3
+bindsym Mod1+4 move container to workspace number $ws4
+bindsym Mod1+5 move container to workspace number $ws5
+bindsym Mod1+6 move container to workspace number $ws6
+bindsym Mod1+7 move container to workspace number $ws7
+bindsym Mod1+8 move container to workspace number $ws8
+bindsym Mod1+9 move container to workspace number $ws9
+
+# ─────────────────────────────────────────────────────────────
+# Monitors  (mango parity)
+# ─────────────────────────────────────────────────────────────
+bindsym Mod1+Shift+Left focus output left
+bindsym Mod1+Shift+Right focus output right
+bindsym $mod+Mod1+Left move container to output left
+bindsym $mod+Mod1+Right move container to output right
+
+# ─────────────────────────────────────────────────────────────
+# Gaps  (mango parity)
+# ─────────────────────────────────────────────────────────────
+bindsym Mod1+Shift+x gaps inner current plus 2; gaps outer current plus 2
+bindsym Mod1+Shift+z gaps inner current minus 2; gaps outer current minus 2
+bindsym Mod1+Shift+r gaps inner current toggle 5; gaps outer current toggle 10
+
+# ─────────────────────────────────────────────────────────────
+# Floating window move / resize  (mango parity)
+# ─────────────────────────────────────────────────────────────
+bindsym Control+Shift+Left move left 50 px
+bindsym Control+Shift+Right move right 50 px
+bindsym Control+Shift+Up move up 50 px
+bindsym Control+Shift+Down move down 50 px
+
+bindsym Control+Mod1+Left resize shrink width 50 px
+bindsym Control+Mod1+Right resize grow width 50 px
+bindsym Control+Mod1+Up resize grow height 50 px
+bindsym Control+Mod1+Down resize shrink height 50 px
+
+# mouse (mango: Super+LMB move, Super+RMB resize, MMB maximize)
+bindsym button2 fullscreen toggle
+
+# ─────────────────────────────────────────────────────────────
+# Apps
+# ─────────────────────────────────────────────────────────────
+bindsym $mod+Shift+b exec librewolf
+bindsym $mod+Shift+m exec $term -e htop
+
+# screenshots
+bindsym Print exec ~/.config/scripts/screenshot.sh full
+bindsym $mod+Print exec ~/.config/scripts/screenshot.sh select
+bindsym $mod+Shift+Print exec ~/.config/scripts/screenshot.sh window
+
+# ─────────────────────────────────────────────────────────────
+# Media & hardware keys
+# ─────────────────────────────────────────────────────────────
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
+bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
+bindsym XF86AudioNext exec --no-startup-id playerctl next
+bindsym XF86AudioPrev exec --no-startup-id playerctl previous
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +10%
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 10%-
+
+# ─────────────────────────────────────────────────────────────
+# Floating / app rules
+# ─────────────────────────────────────────────────────────────
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [class="Pavucontrol"] floating enable
+for_window [class="nm-connection-editor"] floating enable
+for_window [class="Lxappearance"] floating enable
+for_window [class="Nitrogen"] floating enable
+for_window [class="Arandr"] floating enable
+for_window [title="Save File"] floating enable
+
+assign [class="librewolf"] $ws2
+assign [class="kitty"] $ws1

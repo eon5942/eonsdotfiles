@@ -86,6 +86,7 @@ exec_always --no-startup-id dunst
 exec_always --no-startup-id feh --no-fehbg --bg-fill ~/.config/i3/wallpaper
 exec_always --no-startup-id setxkbmap -option caps:escape
 exec --no-startup-id nm-applet
+exec --no-startup-id spice-vdagent
 exec --no-startup-id python3 ~/.config/scripts/master-stack.py
 
 # ─────────────────────────────────────────────────────────────

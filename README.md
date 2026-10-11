@@ -560,7 +560,7 @@ dots install
 ```
 
 Packages: `i3 polybar picom rofi dunst feh kitty fastfetch maim xclip xdotool
-libnotify playerctl pavucontrol brightnessctl xss-lock i3lock setxkbmap
+libnotify playerctl pavucontrol brightnessctl setxkbmap
 python3-i3ipc`, plus librewolf (flatpak: `io.gitlab.librewolf-community`).
 
 ---

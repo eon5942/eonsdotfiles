@@ -32,14 +32,14 @@ window {
 
 mainbox {
     background-color: @bg;
-    border-radius: 0px;
+    border-radius: 6px;
     padding: 8px;
     children: [ inputbar, listview ];
 }
 
 inputbar {
     background-color: @bg1;
-    border-radius: 0px;
+    border-radius: 6px;
     padding: 6px 8px;
     children: [ prompt, entry ];
 }
@@ -69,7 +69,7 @@ element {
     padding: 6px 10px;
     background-color: transparent;
     text-color: @fg;
-    border-radius: 0px;
+    border-radius: 6px;
 }
 
 element selected {

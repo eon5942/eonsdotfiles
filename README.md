@@ -514,8 +514,8 @@ exists):
 ## i3 (`i3` group)
 
 The mango keymap ported to X11 with an Everforest theme: same 9-tag Ctrl/Alt
-key scheme, same Iosevka Nerd Font Mono, a flat mono-style bar (matching the
-`mono` group's bar), an evergreen-forest wallpaper, and a fair (grid) tiling
+key scheme, same Iosevka Nerd Font Mono, a mango-style slot bar (beveled chips,
+colored accents), an evergreen-forest wallpaper, and a fair (grid) tiling
 layout. Runs on [i3](https://i3wm.org) with gaps, polybar (bar), rofi
 (launcher), picom (compositor, with blur), dunst (notifications), and kitty
 (terminal, semi-transparent). Browser: librewolf.
@@ -526,7 +526,7 @@ layout. Runs on [i3](https://i3wm.org) with gaps, polybar (bar), rofi
 | ----------------------------------- | ------------------------------------ | -------------------------- |
 | `i3/i3/config`                      | `~/.config/i3/config`                | i3 config (keybinds+gaps)  |
 | `i3/i3/wallpaper`                   | `~/.config/i3/wallpaper`             | wallpaper                  |
-| `i3/polybar/config.ini`             | `~/.config/polybar/config.ini`       | bar (flat mono-style)       |
+| `i3/polybar/config.ini`             | `~/.config/polybar/config.ini`       | bar (mango slot look)       |
 | `i3/polybar/launch.sh`              | `~/.config/polybar/launch.sh`        | bar launcher               |
 | `i3/polybar/scripts/*`              | `~/.config/polybar/scripts/*`        | media/battery/temp/network |
 | `i3/picom/picom.conf`               | `~/.config/picom/picom.conf`         | blur, shadows              |

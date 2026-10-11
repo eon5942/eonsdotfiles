@@ -87,7 +87,7 @@ exec_always --no-startup-id feh --no-fehbg --bg-fill ~/.config/i3/wallpaper
 exec_always --no-startup-id setxkbmap -option caps:escape
 exec --no-startup-id nm-applet
 exec --no-startup-id xss-lock -- i3lock -i ~/.config/i3/wallpaper -c 000000
-exec --no-startup-id python3 ~/.config/scripts/fair.py
+exec --no-startup-id python3 ~/.config/scripts/master-stack.py
 
 # ─────────────────────────────────────────────────────────────
 # Launch / system  (mango parity)
@@ -141,6 +141,7 @@ bindsym Mod1+Shift+Return layout toggle split
 # resize (works in any layout)
 bindsym $mod+h resize shrink width 5 ppt
 bindsym $mod+semicolon resize grow width 5 ppt
+bindsym $mod+Shift+Return exec --no-startup-id python3 ~/.config/scripts/zoom.py
 
 # ─────────────────────────────────────────────────────────────
 # Tags / workspaces  (mango parity)
@@ -208,7 +209,7 @@ bindsym button2 fullscreen toggle
 # ─────────────────────────────────────────────────────────────
 # Apps
 # ─────────────────────────────────────────────────────────────
-bindsym $mod+Shift+b exec librewolf
+bindsym $mod+Shift+b exec flatpak run io.gitlab.librewolf-community
 bindsym $mod+Shift+m exec $term -e htop
 
 # screenshots

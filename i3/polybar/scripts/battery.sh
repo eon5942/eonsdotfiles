@@ -5,6 +5,9 @@ for b in /sys/class/power_supply/BAT*; do
     cap=$(cat "$b/capacity" 2>/dev/null)
     status=$(cat "$b/status" 2>/dev/null)
     [ -z "$cap" ] && continue
-    printf 'BAT %s%%' "$cap"
+    case "$status" in
+        Charging) printf 'BAT %s%%' "$cap" ;;
+        *)        printf 'BAT %s%%' "$cap" ;;
+    esac
     break
 done

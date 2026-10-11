@@ -86,7 +86,6 @@ exec_always --no-startup-id dunst
 exec_always --no-startup-id feh --no-fehbg --bg-fill ~/.config/i3/wallpaper
 exec_always --no-startup-id setxkbmap -option caps:escape
 exec --no-startup-id nm-applet
-exec --no-startup-id xss-lock -- i3lock -i ~/.config/i3/wallpaper -c 000000
 exec --no-startup-id python3 ~/.config/scripts/master-stack.py
 
 # ─────────────────────────────────────────────────────────────
@@ -96,7 +95,6 @@ bindsym Mod1+Return exec $term
 bindsym Mod1+space exec $launcher
 bindsym $mod+Shift+s exec ~/.config/scripts/screenshot.sh select
 bindsym $mod+Escape exec systemctl suspend
-bindsym $mod+l exec i3lock -i ~/.config/i3/wallpaper -c 000000
 bindsym $mod+Shift+Escape exec ~/.config/scripts/powermenu.sh
 bindsym $mod+m exit
 bindsym Mod1+q kill
@@ -140,7 +138,9 @@ bindsym Mod1+Shift+Return layout toggle split
 
 # resize (works in any layout)
 bindsym $mod+h resize shrink width 5 ppt
-bindsym $mod+semicolon resize grow width 5 ppt
+bindsym $mod+l resize grow width 5 ppt
+bindsym $mod+j resize grow height 5 ppt
+bindsym $mod+k resize shrink height 5 ppt
 bindsym $mod+Shift+Return exec --no-startup-id python3 ~/.config/scripts/zoom.py
 
 # ─────────────────────────────────────────────────────────────
